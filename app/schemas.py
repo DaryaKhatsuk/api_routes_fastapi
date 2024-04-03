@@ -2,10 +2,10 @@ from typing import Union
 from pydantic import BaseModel, ConfigDict
 
 
-# Схема Pydantic для входных данных точки маршрута
 class RoutePointCreate(BaseModel):
     model_config = ConfigDict(coerce_numbers_to_str=True)
-    id: int
+
+    zip: int
     lat: Union[float, None] = None
     lng: Union[float, None] = None
     city: Union[str, None] = None
@@ -26,7 +26,7 @@ class RoutePointCreate(BaseModel):
 
 
 # Схема для данных точки маршрута
-class RoutePoint(BaseModel):
+class RoutePoints(BaseModel):
     lat: float
     lng: float
 
@@ -34,4 +34,6 @@ class RoutePoint(BaseModel):
 # Схема для данных маршрута
 class RouteData(BaseModel):
     id: int
-    points: list[RoutePoint]
+    points: list[
+        RoutePoints
+    ]

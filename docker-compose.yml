@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  fastapi-app:
+    build: ./
+    depends_on:
+      - db
+    command: bash -c 'while !</dev/tcp/postgress/5432; do sleep 1; done; unicorn app.main:app --host 127.0.0.1 --port 8000'
+    volumes:
+      - //c/Users/Foxy/PycharmProjects/api_routes_fastapi/app:/app
+    ports:
+      - "8000:8000"
+    restart: always
+
+  db:
+    container_name: db_app
+    image: postgres
+    restart: always
+    environment:
+     - POSTGRESQL_USERNAME=Admin
+     - POSTGRESQL_PASSWORD=5947
+     - POSTGRESQL_DATABASE=dbname
+     - POSTGRES_HOST_AUTH_METHOD=trust
+#    env_file: .env
+#    user: root
+    volumes:
+     - .postgres:/var/lib/postgresql/data/
+    ports:
+     - 5454:5432

@@ -21,8 +21,6 @@ services:
      - POSTGRESQL_PASSWORD=5947
      - POSTGRESQL_DATABASE=dbname
      - POSTGRES_HOST_AUTH_METHOD=trust
-#    env_file: .env
-#    user: root
     volumes:
      - .postgres:/var/lib/postgresql/data/
     ports:

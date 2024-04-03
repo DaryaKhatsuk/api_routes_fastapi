@@ -10,9 +10,6 @@ app = FastAPI()
 # Создаем таблицы в базе данных
 Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
 def find_nearest_neighbors(points: list[dict[str, float]], n_neighbors: int = 2) -> dict[tuple[float, float]]:
     coordinates = [(point["lat"], point["lng"]) for point in points]
@@ -57,9 +54,7 @@ def create_route(csv_file: UploadFile = File(...)):
 
     # Преобразование каждой пары координат в формат {"lat": ..., "lng": ...}
     formatted_results = [[{"lat": lat, "lng": lng} for lat, lng in route] for route in results]
-    # Объединение всех точек из разных маршрутов в один список
     all_points = [point for route in formatted_results for point in route]
-    # Создание общего словаря с ключом "routes"
     output = {"points": all_points}
 
     # Сохранение маршрута в базе данных
@@ -84,5 +79,4 @@ async def get_route(route_id: int):
 
 if __name__ == "__main__":
     import uvicorn
-    print('RUN!')
     uvicorn.run(app, host="0.0.0.0", port=8000)
